@@ -3,6 +3,17 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        """Create custom manager.
+
+        This allows us to define a new 'published' queryset attribute on the Post model
+        that displays published posts.  We can then apply various filters to this custom queryset.
+        """
+        queryset = super(PublishedManager, self).get_queryset()
+        queryset = queryset.filter(status='published')
+        return queryset
+
 class Post(models.Model):
     STATUS_CHOICES = (
         ('draft', 'Draft'),
@@ -18,6 +29,9 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
+
+    objects = models.Manager()          # The default manager
+    published = PublishedManager()      # Our custom manager
 
     class Meta:
         ordering = ('-publish',)
