@@ -119,3 +119,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# For testing email, output all emails to the console.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
