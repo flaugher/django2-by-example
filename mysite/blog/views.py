@@ -1,8 +1,11 @@
+from pdb import set_trace as debug
+
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 
+from .forms import EmailPostForm
 from .models import Post
 
 
@@ -39,7 +42,7 @@ def post_share(request, post_id):
             # Send email.  build_absolute_uri builds a complete email including
             # the HTTP schema and hostname.
             post_url = request.build_absolute_uri(
-                post.get_absolute_url())
+                post.get_absolute_url()
             )
             subject = '{} ({}) recommends you reading " {}"'.format(
                 cd['name'], cd['email'], post.title

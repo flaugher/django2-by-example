@@ -10,4 +10,8 @@
   Published {{ post.publish }} by {{ post.author }}
 </p>
 {{ post.body|linebreaks }}
+<p>
+  {% comment %} Use namespace 'blog' and the URL named post_share and pass the post ID {% endcomment %}
+  <a href="{% url "blog:post_share" post.id %}">Share this post</a>
+</p>
 {% endblock content %}
