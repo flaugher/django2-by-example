@@ -40,11 +40,11 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        from django.core.urlresolvers import reverse
+        from django.urls import reverse
         return reverse('blog:post_detail',
-            args=[self.publisher.year,
-                  self.publisher.month,
-                  self.publisher.day,
+            args=[self.publish.year,
+                  self.publish.month,
+                  self.publish.day,
                   self.slug
             ]
         )
