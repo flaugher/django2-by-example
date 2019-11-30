@@ -1,3 +1,4 @@
 Django
 isort
 django-template-check
+django-taggit

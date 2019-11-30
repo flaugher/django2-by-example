@@ -8,6 +8,8 @@ from django.views.generic import ListView
 from .forms import CommentForm, EmailPostForm
 from .models import Comment, Post
 
+from taggit.models import Tag
+
 
 def post_detail(request, year, month, day, post):
     """Get a post's details."""
