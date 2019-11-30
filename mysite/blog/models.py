@@ -17,7 +17,7 @@ class Comment(models.Model):
     email = models.EmailField()
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(auto_now=True)
     # Use for deactivating inappropriate comments.
     active = models.BooleanField(default=True)
 
