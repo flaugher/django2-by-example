@@ -3,6 +3,30 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
+class Comment(models.Model):
+    """Stores comments."""
+    # Notice how he always creates a related_name for foreign key fields.
+    # This names the 'post' attribute for use in specifying the relation
+    # from the related object (a post) back to this one.
+    # Retrieve the post for a given comment: comment.post
+    # Retrieve all comments for a given post: post.comments.all()
+    # This is better than having to use 'comment_set'.
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='comments')
+    # Enclose Post in single quotes since it's declared later in the file.
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    update = models.DateTimeField(auto_now=True)
+    # Use for deactivating inappropriate comments.
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return 'Comment by {} on {}'.format(self.name, self.post)
+
 class PublishedManager(models.Manager):
     def get_queryset(self):
         """Create custom manager.
@@ -15,6 +39,7 @@ class PublishedManager(models.Manager):
         return queryset
 
 class Post(models.Model):
+    """Stores blog posts."""
     STATUS_CHOICES = (
         ('draft', 'Draft'),
         ('published', 'Published'),
