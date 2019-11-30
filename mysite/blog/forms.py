@@ -1,5 +1,7 @@
 from django import forms
 
+from .models import Comment
+
 # Use forms.Form when you're building a form that doesn't correspond to a model.
 # Use forms.ModelForm when you're building a form that does correpond to a model.
 
