@@ -39,20 +39,31 @@ def post_detail(request, year, month, day, post):
                    'new_comment': new_comment,
                    'comment_form': comment_form})
 
-#def post_list(request):
-#    """List published posts."""
-#    object_list = Post.published.all()
-#    paginator = Paginator(object_list, 3) # 3 posts per page
-#    page = request.GET.get('page')
-#    try:
-#        posts = paginator.page(page)
-#    except PageNotAnInteger:
-#        # If page is not an integer, deliver the first page
-#        posts = paginator.page(1)
-#    except EmptyPage:
-#        # If page is out of range, deliver the last page of results
-#        posts = paginator.page(paginator.num_pages)
-#    return render(request, 'blog/post/list.html', {'page': page, 'posts': posts})
+def post_list(request, tag_slug=None):
+    """List published posts."""
+    object_list = Post.published.all()
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        # Since posts and tags have a many-to-many relationship
+        # we have to filter by tags contained in the given list
+        # which, in this case, contains only one tag element.
+        object_list = object_list.filter(tags__in=[tag])
+
+    paginator = Paginator(object_list, 3) # 3 posts per page
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range, deliver the last page of results
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'blog/post/list.html', {'page': page,
+                                                   'posts': posts,
+                                                   'tag': tag})
 
 def post_share(request, post_id):
     """Retrieve post by id."""
@@ -81,9 +92,9 @@ def post_share(request, post_id):
         form = EmailPostForm()
     return render(request, 'blog/post/share.html', {'post': post, 'form': form, 'sent': sent})
 
-class PostListView(ListView):
-    """List published posts."""
-    queryset = Post.published.all()
-    context_object_name = 'posts'
-    paginate_by = 3
-    template_name = 'blog/post/list.html'
+#class PostListView(ListView):
+#    """List published posts."""
+#    queryset = Post.published.all()
+#    context_object_name = 'posts'
+#    paginate_by = 3
+#    template_name = 'blog/post/list.html'
