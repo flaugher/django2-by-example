@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_template_check',
+    'django.contrib.sites',         # Required by sitemap
+    'django.contrib.sitemaps',      # Required by sitemap
     'blog.apps.BlogConfig',
     'taggit',
 ]
@@ -124,3 +126,6 @@ STATIC_URL = '/static/'
 
 # For testing email, output all emails to the console.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Required by sitemap
+SITE_ID = 1
