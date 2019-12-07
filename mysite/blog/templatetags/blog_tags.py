@@ -1,5 +1,8 @@
 from django import template
 from django.db.models import Count
+from django.utils.safestring import mark_safe
+
+import markdown
 
 from ..models import Post
 
@@ -32,3 +35,15 @@ def show_latest_posts(count=5):
     latest_posts = Post.published.order_by('-publish')[:count]
     # Inclusion tags have to return a dictionary of values.
     return {'latest_posts': latest_posts}
+
+@register.filter(name='markdown')
+def markdown_format(text):
+    """Enable use of markdown syntax in blog posts.
+
+    Name function 'markdown_format' to avoid name collision when we do
+    {{ variable|markdown }} in templates.
+
+    mark_safe marks the result as safe HTML so Django doesn't escape it
+    when outputting it.
+    """
+    return mark_safe(markdown.markdown(text))
