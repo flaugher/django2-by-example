@@ -2,6 +2,7 @@ from pdb import set_trace as debug
 
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 
@@ -32,12 +33,37 @@ def post_detail(request, year, month, day, post):
             new_comment.save()
     else:
         comment_form = CommentForm()
+
+    # Retrieve list of similar posts.
+    # Note: post.tags gets all tags for the given post. Posts and tags
+    # have a many-many relationship.
+    post_tags_ids = post.tags.values_list('id', flat=True)
+    # Get all posts that contain any of the tags associated with this post.
+    similar_posts = Post.published.filter(tags__in=post_tags_ids)\
+        .exclude(id=post.id)
+    # Count generates a calculated field 'same_tags' which contains the
+    # number of tags a post shares with the given post.  similar_posts
+    # is a query set. Therefore similar_posts[0].same_tags tells you how
+    # many tags the post in similar_posts[0] shares with the given post.
+    # See https://shrtm.nu/FYrV
+    # Display the first four posts that share the largest number of tags
+    # with the given post.
+    similar_posts = similar_posts.annotate(same_tags=Count('tags'))\
+        .order_by('-same_tags', '-publish')[:4]
+
+    # django-taggit includes a similar_objects() manager that you can use to retrieve objects by shared tags.
+    # See these:
+    # https://shrtm.nu/PaNj
+    # https://shrtm.nu/fSDY
+    # https://shrtm.nu/lfqv
+
     return render(request,
                   'blog/post/detail.html',
                   {'post': post,
                    'comments': comments,
                    'new_comment': new_comment,
-                   'comment_form': comment_form})
+                   'comment_form': comment_form,
+                   'similar_posts': similar_posts})
 
 def post_list(request, tag_slug=None):
     """List published posts."""

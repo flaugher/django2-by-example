@@ -36,13 +36,33 @@
 {% endfor %}
 
 {% if new_comment %}
+
   <h2>Your comment has been added.</h2>
+
 {% else %}
+
+  {% comment %}
+  django-taggit includes a similar_objects() manager that you can use to retrieve objects by shared tags.
+  See these:
+  https://shrtm.nu/PaNj
+  https://shrtm.nu/fSDY
+  https://shrtm.nu/lfqv
+  {% endcomment %}
+  <h2>Similar Posts</h2>
+  {% for post in similar_posts %}
+    <p>
+      <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    </p>
+  {% empty %}
+    There are no similar posts yet.
+  {% endfor %}
+
   <h2>Add a new comment</h2>
   <form action="." method="post">
     {{ comment_form.as_p }}
     {% csrf_token %}
     <p><input type="submit" value="Add comment"></p>
   </form>
+
 {% endif %}
 {% endblock content %}
