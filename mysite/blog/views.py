@@ -1,16 +1,15 @@
 from pdb import set_trace as debug
 
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
+from taggit.models import Tag
 
 from .forms import CommentForm, EmailPostForm, SearchForm
 from .models import Comment, Post
-
-from taggit.models import Tag
 
 
 def post_detail(request, year, month, day, post):
@@ -93,7 +92,11 @@ def post_list(request, tag_slug=None):
                                                    'tag': tag})
 
 def post_search(request):
-    """Allow users to search posts."""
+    """Allow users to search posts.
+
+    Search by blog title or body.
+    Search also does ranking.
+    """
     form = SearchForm()
     query = None
     results = []
@@ -104,9 +107,12 @@ def post_search(request):
             # Create queryset that contains contents of titles and bodies
             # of all blog posts. Then filter for the posts that contain the
             # desired query term.
+            search_vector = SearchVector('title', 'body')
+            search_query = SearchQuery(query)
             results = Post.objects.annotate(
-                search=SearchVector('title', 'body'),
-            ).filter(search=query)
+                search=search_vector,
+                rank=SearchRank(search_vector, search_query)
+            ).filter(search=search_query).order_by('-rank')
     return render(request, 'blog/post/search.html',
         {'form': form, 'query': query, 'results': results})
 
