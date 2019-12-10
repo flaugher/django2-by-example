@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_template_check',
+    'django.contrib.postgres',
     'django.contrib.sites',         # Required by sitemap
     'django.contrib.sitemaps',      # Required by sitemap
+    'django_extensions',
     'blog.apps.BlogConfig',
     'taggit',
 ]
@@ -80,8 +82,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django_projects',
+        'USER': 'flaugher',
+        'PASSWORD': '2WdtQQ',
     }
 }
 
