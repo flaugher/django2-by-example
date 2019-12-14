@@ -1,3 +1,4 @@
+django.log
 venv/
 *.pyc
 *.*.swp
