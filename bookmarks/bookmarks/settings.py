@@ -131,3 +131,26 @@ LOGIN_URL = 'login'
 # The URL to redirect the user to log out
 LOGOUT_URL = 'logout'
 # Note that in the last two URLs 'x_URL', 'x' matches the value of 'name' in the path functions we defined in account/urls.py.
+
+# In development, send emails to console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Add some logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': '/Users/flaugher/projects/django/django2_by_example/bookmarks/debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
