@@ -1,5 +1,7 @@
 Django: admin / adminpw (email: flaugher@gmail.com)
 
-Django user: flaugher / mypassword!
+Django users:
+flaugher / mypassword!
+michaels /georgefaith
 
 PostgreSQL: (django_projects) flaugher / 2WdtQQ
