@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% comment %}
+Django's authentication templates must go in a 'registration'subdirectory.
+{% endcomment %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+  <h1>Login</h1>
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% else %}
+    <p>Please use the following form to login:</p>
+  {% endif %}
+
+  <div class="login-form">
+    <form action="{% url 'login' %}" method="post">
+      {{ form.as_p }}
+      {% csrf_token %}
+      {% comment %} 'next' is first set by the login view when you pass a 'next'
+      parameter in the request, e.g. 'account/login/?next=/account/' {% endcomment %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      <p><input type="submit" value="login"></p>
+    </form>
+  </div>
+{% endblock content %}
