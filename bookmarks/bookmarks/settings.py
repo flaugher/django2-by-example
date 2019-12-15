@@ -119,6 +119,8 @@ USE_L10N = True
 USE_TZ = True
 
 
+### SETTINGS I ADDED ##################################################
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -135,7 +137,6 @@ LOGOUT_URL = 'logout'
 # In development, send emails to console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Add some logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -154,3 +155,7 @@ LOGGING = {
         },
     },
 }
+
+# Serve media files from development server
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

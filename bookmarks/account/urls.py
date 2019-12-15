@@ -24,5 +24,7 @@ urlpatterns = [
     # account/reset/done/
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     # account/register/
-    path('register/', views.register, name='register')
+    path('register/', views.register, name='register'),
+    # account/edit/
+    path('edit/', views.edit, name='edit'),
 ]
