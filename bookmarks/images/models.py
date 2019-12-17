@@ -13,7 +13,7 @@ class Image(models.Model):
     title = models.CharField(max_length=200)
     # SEO-friendly URL
     slug = models.SlugField(max_length=200, blank=True)
-    # Original URL for the image
+    # Original URL for where the user saw the image
     url = models.URLField()
     image = models.ImageField(upload_to='images/%Y/%m/%d/')
     description = models.TextField(blank=True)
