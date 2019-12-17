@@ -19,6 +19,12 @@ class Image(models.Model):
     description = models.TextField(blank=True)
     # Create a database index for the created field.
     created = models.DateField(auto_now_add=True, db_index=True)
+    # Related field allows you to:
+    # Retrieve all users that like an image: image.users_like.all()
+    # Retrieve all images liked by a user: user.images_liked.all()
+    users_like = models.ManyToManyField(settings.AUTH_USER_MODEL,
+        related_name='images_liked',
+        blank=True)
 
     def __str__(self):
         return self.title
