@@ -22,6 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # account/
     path('account/', include('account.urls')),
+    # images/
+    path('images/', include('images.urls', namespace='images')),
 ]
 
 # Allow Django development server to serve media files when DEBUG is True
