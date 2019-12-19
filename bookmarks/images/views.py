@@ -2,7 +2,9 @@ from pdb import set_trace as debug
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
 from .forms import ImageCreateForm
 from .models import Image
@@ -34,3 +36,27 @@ def image_detail(request, id, slug):
     """Display an image's details."""
     image = get_object_or_404(Image, id=id, slug=slug)
     return render(request, 'images/image/detail.html', {'section': 'images', 'image': image})
+
+
+@login_required
+# Only allow POST requests to enter this view.
+@require_POST
+def image_like(request):
+    image_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if image_id and action:
+        try:
+            image = Image.objects.get(id=image_id)
+            # Assume the user wants to 'like' or 'unlike' an image.
+            if action == 'like':
+                # Indicate that the image is liked by the given user.
+                image.users_like.add(request.user)
+            else:
+                # See Related objects reference
+                # https://docs.djangoproject.com/en/dev/ref/models/relations/
+                image.user_like.remove(request.user)
+            # Return response in JSON format.
+            return JsonResponse({'status': 'ok'})
+        except:
+            pass
+    return JsonResponse({'status': 'ko'})
