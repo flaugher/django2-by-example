@@ -1,3 +1,4 @@
+from pdb import set_trace as debug
 from urllib import request
 
 from django import forms
@@ -43,7 +44,6 @@ class ImageCreateForm(forms.ModelForm):
             """
             # Create a new image instance to work with.
             image = super(ImageCreateForm, self).save(commit=False)
-
             image_url = self.cleaned_data['url']
 
             # Image name is slugified image title combined with the original image file extension.
@@ -58,7 +58,7 @@ class ImageCreateForm(forms.ModelForm):
             response = request.urlopen(image_url)
             image.image.save(image_name, ContentFile(response.read()), save=False)
 
-            # To maintain same behavior as the save() method, only save the form to the database when commit=True.
+            # To maintain same behavior as the save()
             if commit:
                 image.save()
             return image

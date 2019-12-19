@@ -34,6 +34,7 @@ class Image(models.Model):
 
         Only do this when a slug isn' provided.
         """
+        # Automatically generate the slug field based on the value of the title field.
         if not self.slug:
             self.slug = slugify(self.title)
         super(Image, self).save(*args, **kwargs)
