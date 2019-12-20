@@ -68,8 +68,38 @@
   });
   $(document).ready(function(){
     {% block domready %}
-    {% endblock %}
+      // Execute function whenever a user clicks on a <a> tag that has a class of 'like'.
+      // This amounts to running whenever a user clicks on the 'like'/'unlike' link.
+      $('a.like').click(function(e){
+        e.preventDefault();
+        // Make POST request to the server using a Django URL.
+        $.post('{% url "images:like" %}',
+          // Build dictionary containing the POST parameters.
+          {
+            id: $(this).data('id'),
+            action: $(this).data('action')
+          },
+          // This callback function is executed when the HTTP response is received.
+          // 'data' contains the content of the response.
+          function(data){
+            if (data['status'] == 'ok')
+            {
+              var previous_action = $('a.like').data('action');
+
+              // toggle data-action
+              $('a.like').data('action', previous_action == 'like' ? 'unlike' : 'like');
+              // toggle link text
+              $('a.like').text(previous_action == 'like' ? 'Unlike' : 'Like');
+
+              // update total likes
+              var previous_likes = parseInt($('span.count .total').text());
+              $('span.count .total').text(previous_action == 'like' ? previous_likes + 1 : previous_likes - 1);
+            }
+          }
+        );
       });
+    {% endblock %}
+  });
 </script>
 </body>
 </html>
