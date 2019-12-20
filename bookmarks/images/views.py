@@ -6,6 +6,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
+from common.decorators import ajax_required
+
 from .forms import ImageCreateForm
 from .models import Image
 
@@ -38,6 +40,8 @@ def image_detail(request, id, slug):
     return render(request, 'images/image/detail.html', {'section': 'images', 'image': image})
 
 
+# All requests must be generated via AJAX.
+@ajax_required
 @login_required
 # Only allow POST requests to enter this view.
 @require_POST
