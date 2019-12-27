@@ -28,9 +28,10 @@ def dashboard(request):
     # If user is following other users, retrieve only their actions
     if following_ids:
         actions = actions.filter(user_id__in=following_ids)
-    # Limit results to last 10 actions returned.  This assumes the default ordering as
-    # defined in the Action class's Meta class specifies order by last created.
-    actions = actions[:10]
+    # Limit results to last 10 actions returned. This assumes the default ordering as defined in the Action class's Meta class specifies order by last created.
+    actions = actions.select_related('user', 'user__profile')\
+                     .prefetch_related('target')[:10]
+    # With 'select_related', the above query not only gets all the actions performed by the current user but it also accesses the profile of the user associated with each action.  Recall that the Profile model is an extension of the User model.
 
     return render(request,
         'account/dashboard.html',
