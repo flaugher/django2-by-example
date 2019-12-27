@@ -31,7 +31,7 @@ def dashboard(request):
     # Limit results to last 10 actions returned. This assumes the default ordering as defined in the Action class's Meta class specifies order by last created.
     actions = actions.select_related('user', 'user__profile')\
                      .prefetch_related('target')[:10]
-    # With 'select_related', the above query not only gets all the actions performed by the current user but it also accesses the profile of the user associated with each action.  Recall that the Profile model is an extension of the User model.
+    # With 'select_related', the above query not only gets all the actions performed by the current user but it also accesses the profile of the user associated with each action.  Recall that the Profile model is an extension of the User model.  This caches the related user and their profile.  Note too that "select_related('user', 'user__profile')" is the same as ".select_related('user').select_related('user__profile')".  select_related follows FK relationships and selects additional related-object data.  prefetch_related automatically retrieves, in a single batch, related objects in the specified lookup.
 
     return render(request,
         'account/dashboard.html',
