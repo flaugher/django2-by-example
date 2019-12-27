@@ -6,7 +6,8 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 
-from action.utils import create_action
+from actions.models import Action
+from actions.utils import create_action
 from common.decorators import ajax_required
 
 from .forms import (LoginForm, ProfileEditForm, UserEditForm,
@@ -17,9 +18,23 @@ from .models import Contact, Profile
 @login_required
 def dashboard(request):
     """Display dashboard when users log into their account."""
+    # Get all actions excluding those performed by the current user.
+    actions = Action.objects.exclude(user=request.user)
+
+    # Check if the current user is following other users.
+    # We added the 'following' field to the User class in the account model.
+    following_ids = request.user.following.values_list('id', flat=True)
+
+    # If user is following other users, retrieve only their actions
+    if following_ids:
+        actions = actions.filter(user_id__in=following_ids)
+    # Limit results to last 10 actions returned.  This assumes the default ordering as
+    # defined in the Action class's Meta class specifies order by last created.
+    actions = actions[:10]
+
     return render(request,
         'account/dashboard.html',
-        { 'section': 'dashboard' })
+        { 'section': 'dashboard', 'actions': actions })
 
 @login_required
 def edit(request):
