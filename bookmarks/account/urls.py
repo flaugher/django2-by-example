@@ -29,6 +29,9 @@ urlpatterns = [
     path('edit/', views.edit, name='edit'),
     # account/users/
     path('users/', views.user_list, name='user_list'),
+    # account/users/follow/
+    # This must precede the user_detail pattern.
+    path('users/follow/', views.user_follow, name="user_follow"),
     # account/users/johndoe/
     path('users/<username>/', views.user_detail, name='user_detail'),
 ]

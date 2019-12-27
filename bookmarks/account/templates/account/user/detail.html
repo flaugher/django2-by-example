@@ -35,3 +35,36 @@
     </div>
   {% endwith %}
 {% endblock content %}
+
+{% block domready %}
+  $('a.follow').click(function(e){
+    e.preventDefault();
+    {# When user_follow link is posted... #}
+    $.post('{% url "user_follow" %}',
+      {# Read posted inputs. #}
+      {
+        id: $(this).data('id'),
+        action: $(this).data('action')
+      },
+      {# Then execute this function. #}
+      function(data){
+        if (data['status'] == 'ok') {
+          var previous_action = $('a.follow').data('action');
+
+          {# Toggle data-action. #}
+          $('a.follow').data('action',
+            previous_action == 'follow' ? 'unfollow' : 'follow');
+
+          {# Toggle link text. #}
+          $('a.follow').text(previous_action == 'follow' ? 'Unfollow': 'Follow');
+
+          {# Update total followers #}
+          var previous_followers = parseInt(
+            $('span.count .total').text());
+          $('span.count .total').text(previous_action == 'follow' ?
+            previous_followers + 1 : previous_followers -1);
+        }
+      }
+    );
+  });
+{% endblock domready %}
