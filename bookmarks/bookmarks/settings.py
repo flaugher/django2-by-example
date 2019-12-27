@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
 import os
+
+from django.urls import reverse_lazy
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,6 +29,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Canonical URL for users
+# This adds a 'get_absolute_url' method dynamically to
+# auth.user model
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u:reverse_lazy('user_detail',
+        args=[u.username])
+}
 
 # Application definition
 

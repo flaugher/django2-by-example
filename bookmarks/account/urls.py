@@ -27,4 +27,8 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     # account/edit/
     path('edit/', views.edit, name='edit'),
+    # account/users/
+    path('users/', views.user_list, name='user_list'),
+    # account/users/johndoe/
+    path('users/<username>/', views.user_detail, name='user_detail'),
 ]

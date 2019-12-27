@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %}{{ user.get_full_name }}{% endblock title %}
+
+{% block content %}
+  <h1>{{ user.get_full_name }}</h1>
+  <div class="profile-info">
+    {% thumbnail user.profile.photo "180x180" crop="100%" as im %}
+      <img src="{{ im.url }}" class="user-detail" alt="">
+    {% endthumbnail %}
+  </div>
+
+  {# Iterate through all of this user's followers. #}
+  {% with total_followers=user.followers.count %}
+    <span class="count">
+      {# Show how many followers the user has #}
+      <span class="total">{{ total_followers }}</span>
+      follower{{ total_followers|pluralize }}
+    </span>
+
+    {# If the viewer is one of the followers, display an "unfollow" link using an Ajax request. #}
+    <a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}un{% endif %}follow" class="follow button">
+      {# Otherwise, display a link they can click to follow the user being displayed #}
+      {% if request.user not in user.followers.all %}
+        Follow
+      {% else %}
+        Unfollow
+      {% endif %}
+    </a>
+
+    <div id="image-list" class="image-container">
+      {# Show the images created by the user being viewed. #}
+      {% include "images/image/list_ajax.html" with images=user.images_created.all %}
+    </div>
+  {% endwith %}
+{% endblock content %}
