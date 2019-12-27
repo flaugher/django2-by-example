@@ -12,6 +12,12 @@ def create_action(user, verb, target=None):
     target is a model class.
 
     Also prevent website from storing the same action from the same user in short amounts of time.
+
+    Actions:
+    - A user bookmarks an image.
+    - A user likes an image.
+    - A user creates an account.
+    - A user starts following another user.
     """
     # Check for similar actions made in the last minute.
     now = timezone.now()

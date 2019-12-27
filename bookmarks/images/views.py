@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
+from actions.utils import create_action
 from common.decorators import ajax_required
 
 from .forms import ImageCreateForm
@@ -24,6 +25,7 @@ def image_create(request):
             # Assign current user to the image.
             new_item.user = request.user
             new_item.save()
+            create_action(request.user, 'bookmarked image', new_item)
             messages.success(request, 'Image added successfully')
 
             # Redirect user to new created image detail view.
@@ -46,6 +48,7 @@ def image_detail(request, id, slug):
 # Only allow POST requests to enter this view.
 @require_POST
 def image_like(request):
+    """A user likes an image."""
     image_id = request.POST.get('id')
     action = request.POST.get('action')
     if image_id and action:
@@ -55,6 +58,7 @@ def image_like(request):
             if action == 'like':
                 # Indicate that the image is liked by the given user.
                 image.users_like.add(request.user)
+                create_action(request.user, 'likes', image)
             else:
                 # See Related objects reference
                 # https://docs.djangoproject.com/en/dev/ref/models/relations/
