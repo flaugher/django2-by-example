@@ -26,6 +26,14 @@ class Image(models.Model):
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL,
         related_name='images_liked',
         blank=True)
+    # total_likes is a denormalized field that is updated using a signal.
+    # Previously, to get an images total likes, you'd have to use the query:
+    # images_by_popularity = Image.objects.annotate(likes=Count('users_like')).order_by('-likes')
+    # Now it can be written in a less expensive way:
+    # images_by_popularity = Image.objects.order_by('-total_likes')
+    # See loc. 4219 for code to update all total_likes field if you add this
+    # field after users_like fields already contain data.
+    total_likes = models.PositiveIntegerField(db_index=True, default=0)
 
     def __str__(self):
         return self.title
