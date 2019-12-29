@@ -47,10 +47,15 @@ def image_detail(request, id, slug):
 
     Store the number of times an image is viewed in Redis.
     Redis key notation is "object-type:id:field".
+
+    Improvement: Save Redis from memory to disk every X minutes in case the server is brought
+    down.
     """
     image = get_object_or_404(Image, id=id, slug=slug)
-    # Increment total image views by 1
+    # Increment total image views by 1.
     total_views = r.incr('image:{}:views'.format(image.id))
+    # Increment image rank by 1.  Store in Redis as a sorted set with a key of 'image:ranking'.
+    r.zincrby('image_ranking', image.id, 1)
     return render(request, 'images/image/detail.html',
                   {'section': 'images',
                   'image': image,
@@ -109,3 +114,20 @@ def image_list(request):
     return render(request,
                   'images/image/list.html',
                    {'section': 'images', 'images': images})
+
+@login_required
+def image_ranking(request):
+    """Display the ranking of the most-viewed images."""
+    # Get image ranking dictionary.  Get the first 10 images with the highest ranks.
+    image_ranking = r.zrange('image_ranking', 0, -1,
+                              desc=True)[:10]
+    # Build a list of integers containing these image IDs.
+    image_ranking_ids = [int(id) for id in image_ranking]
+    # Get most-viewed images.  Force queryset into a list so we can sort it.
+    most_viewed = list(Image.objects.filter(id__in=image_ranking_ids))
+    # Sort the image objects by their index of appearance in the image ranking.
+    most_viewed.sort(key=lambda x: image_ranking_ids.index(x.id))
+    return render(request,
+                  'images/image/ranking.html',
+                  {'section': 'images',
+                  'most_viewed': most_viewed})

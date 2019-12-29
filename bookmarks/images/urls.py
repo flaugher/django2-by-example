@@ -14,5 +14,8 @@ urlpatterns = [
     path('detail/<int:id>/<slug:slug>/', views.image_detail, name='detail'),
     # images/like/
     path('like/', views.image_like, name='like'),
+    # images/
     path('', views.image_list, name='list'),
+    # images/ranking/
+    path('ranking/', views.image_ranking, name='create'),
 ]
