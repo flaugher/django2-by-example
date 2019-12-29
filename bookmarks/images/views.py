@@ -1,5 +1,7 @@
 from pdb import set_trace as debug
+import redis
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -13,7 +15,10 @@ from common.decorators import ajax_required
 from .forms import ImageCreateForm
 from .models import Image
 
-
+# Connect to redis
+r = redis.StrictRedis(host=settings.REDIS_HOST,
+                      port=settings.REDIS_PORT,
+                      db=settings.REDIS_DB)
 @login_required
 def image_create(request):
     """Create an image."""
@@ -38,9 +43,18 @@ def image_create(request):
     return render(request, 'images/image/create.html', {'section': 'images', 'form': form})
 
 def image_detail(request, id, slug):
-    """Display an image's details."""
+    """Display an image's details.
+
+    Store the number of times an image is viewed in Redis.
+    Redis key notation is "object-type:id:field".
+    """
     image = get_object_or_404(Image, id=id, slug=slug)
-    return render(request, 'images/image/detail.html', {'section': 'images', 'image': image})
+    # Increment total image views by 1
+    total_views = r.incr('image:{}:views'.format(image.id))
+    return render(request, 'images/image/detail.html',
+                  {'section': 'images',
+                  'image': image,
+                  'total_views': total_views})
 
 
 # All requests must be generated via AJAX.

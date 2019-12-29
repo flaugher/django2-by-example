@@ -19,10 +19,22 @@
 [Django-2-by-Example](https://github.com/PacktPublishing/Django-2-by-Example)
 [Errata](https://github.com/Django-By-Example-ZH/Django-By-Example-ZH/issues/6)
 
+## Redis
+
+    # Install Redis server
+    brew install redis
+
+    # Run
+    redis-server /usr/local/etc/redis.conf &
+
+    # Install Python [bindings](https://redis-py.readthedocs.io/
+    pip install redis
+
 ## Pip requirements
 
 - Django
 - django-taggit
+- redis
 
 ## Images application
 
