@@ -6,25 +6,55 @@ I didn't get all the features in the bookmarks project working but the modules d
 
 If you want to see a working solution, go to the solution folder ~/projects/django/django2_by_example_solution/bookmarks_final..  I worked through the features there via my browser to check that everything works.
 
+## Code
+
+[Django-2-by-Example](https://github.com/PacktPublishing/Django-2-by-Example)
+[Errata](https://github.com/Django-By-Example-ZH/Django-By-Example-ZH/issues/6)
+
 ## Virtual environment
 
     cd ~/projects/django/django2_by_example
     workon django2_by_example
+
+## Pip requirements
+
+See requirements-to-freeze.txt.
 
 ## Development server
 
     cd ~/projects/django/django2_by_example
     python manage.py runserver
 
+## Ngrok server
+
+This server is used in the bookmarklet chapter.  It creates a tunnel to expose your localhost to the Internet through both HTTP and HTTPS.
+
+### Install Ngrok
+
+    brew cask install ngrok
+
+### Run Ngrok
+
+    # Keep your Django development server running and start the Ngrok server.
+    ngrok http 8000             # Ngrok URL -> https://e6cf301d.ngrok.io
+
+    # Add the forwarding address to your ALLOWED_HOSTS setting.  For example,
+    ALLOWED_HOSTS = [
+        'mysite.com',
+        'localhost',
+        '127.0.0.1',
+        'e6cf301d.ngrok.io'     # <- New Ngrok domain name
+    ]
+
+    # Test it's working by putting this HTTPS URL in your browser:
+    https://e6cf301d.ngrok.io/account/login
+
+    # Put the updated Ngrok domain name in the bookmarklet_launcher.js and js/bookmarklet.js files.  See loc. 3232.
+
 ## Run apps
 
     localhost:8000/blog
     localhost:8000/account
-
-## Code
-
-[Django-2-by-Example](https://github.com/PacktPublishing/Django-2-by-Example)
-[Errata](https://github.com/Django-By-Example-ZH/Django-By-Example-ZH/issues/6)
 
 ## Redis
 
@@ -43,10 +73,6 @@ If you don't start the Redis server, you'll see this error:
 ### Install Python [bindings](https://redis-py.readthedocs.io/
 
     pip install redis
-
-## Pip requirements
-
-See requirements-to-freeze.txt.
 
 ## Images application
 
