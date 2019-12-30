@@ -4,12 +4,12 @@
 
 I didn't get all the features in the bookmarks project working but the modules do contain my notes on how things work.
 
-If you want to see a working solution, go to the solution folder.  I worked through the features there via my browser to check that everything works..
+If you want to see a working solution, go to the solution folder ~/projects/django/django2_by_example_solution/bookmarks_final..  I worked through the features there via my browser to check that everything works.
 
 ## Virtual environment
 
     cd ~/projects/django/django2_by_example
-    . venv/bin/activate
+    workon django2_by_example
 
 ## Development server
 
@@ -19,6 +19,7 @@ If you want to see a working solution, go to the solution folder.  I worked thro
 ## Run apps
 
     localhost:8000/blog
+    localhost:8000/account
 
 ## Code
 
@@ -38,9 +39,7 @@ If you want to see a working solution, go to the solution folder.  I worked thro
 
 ## Pip requirements
 
-- Django
-- django-taggit
-- redis
+See requirements-to-freeze.txt.
 
 ## Images application
 
