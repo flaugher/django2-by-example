@@ -1,5 +1,11 @@
 # README
 
+## WARNING
+
+I didn't get all the features in the bookmarks project working but the modules do contain my notes on how things work.
+
+If you want to see a working solution, go to the solution folder.  I worked through the features there via my browser to check that everything works..
+
 ## Virtual environment
 
     cd ~/projects/django/django2_by_example
