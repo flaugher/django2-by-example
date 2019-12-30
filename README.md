@@ -28,13 +28,20 @@ If you want to see a working solution, go to the solution folder ~/projects/djan
 
 ## Redis
 
-    # Install Redis server
+If you don't start the Redis server, you'll see this error:
+
+    redis.exceptions.ConnectionError: Error 61 connecting to localhost:6379.  Connection refused.
+
+### Install Redis server
+
     brew install redis
 
-    # Run
+### Run
+
     redis-server /usr/local/etc/redis.conf &
 
-    # Install Python [bindings](https://redis-py.readthedocs.io/
+### Install Python [bindings](https://redis-py.readthedocs.io/
+
     pip install redis
 
 ## Pip requirements

@@ -9,5 +9,6 @@ psycopg2-binary
 pytz
 redis
 six
+social-auth-app-django
 sorl-thumbnail
 sqlparse
