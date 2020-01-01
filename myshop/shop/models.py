@@ -14,6 +14,11 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        # Use the urlconf named 'product_list_by_category' in the 'shop' namespace and pass it a slug.
+        return reverse("shop:product_list_by_category", args=[self.slug])
+
+
 class Product(models.Model):
     category = models.ForeignKey(Category,
         related_name='products',
@@ -38,4 +43,4 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("_detail", kwargs={"pk": self.pk})
+        return reverse('shop:product_detail', args=[self.id, self.slug])
