@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
 ]
 
 MIDDLEWARE = [
@@ -120,5 +121,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Where product images get uploaded to
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# Key used to store a user's cart in their session
+CART_SESSION_ID = 'cart'
