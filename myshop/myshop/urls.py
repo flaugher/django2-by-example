@@ -20,6 +20,8 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Put cart path before shop path since it is more restrictive.
+    path('cart/', include('cart.urls', namespace='cart')),
     path('', include('shop.urls', namespace='shop')),
 ]
 
