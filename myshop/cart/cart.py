@@ -13,6 +13,9 @@ class Cart(object):
         A cart object is a dictionary that uses a product ID as the
         key and a dictionary with quantity and price as the value for
         each key.
+
+        Cart object:
+            { product_id: {quantity, price} }
         """
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
@@ -68,7 +71,7 @@ class Cart(object):
         """Calculate total cost of all items in the cart."""
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
 
-    def remote(self, product):
+    def remove(self, product):
         """Remove a product from a cart."""
         product_id = str(product.id)
         if product_id in self.cart:
