@@ -66,7 +66,7 @@ class Cart(object):
 
     def get_total_price(self):
         """Calculate total cost of all items in the cart."""
-        return sum(Decimal(item['price'] * item['quantity'] for item in self.cart.values()))
+        return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
 
     def remote(self, product):
         """Remove a product from a cart."""
