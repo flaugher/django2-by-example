@@ -8,22 +8,28 @@ If you want to see a working solution, go to the solution folder ~/projects/djan
 
 ## Code
 
+Code for this book is here:
+
 [Django-2-by-Example](https://github.com/PacktPublishing/Django-2-by-Example)
 [Errata](https://github.com/Django-By-Example-ZH/Django-By-Example-ZH/issues/6)
 
-## Virtual environment
+## Start development server
 
     cd ~/projects/django/django2_by_example
     workon django2_by_example
+    python manage.py runserver
+
+## URLS
+
+[localhost:8000](http://localhost:8000)
+
+## Edit code
+
+    Use Visual Studio Code to edit code.
 
 ## Pip requirements
 
 See requirements-to-freeze.txt.
-
-## Development server
-
-    cd ~/projects/django/django2_by_example
-    python manage.py runserver
 
 ## Ngrok server
 
@@ -66,11 +72,11 @@ If you don't start the Redis server, you'll see this error:
 
     brew install redis
 
-### Run
+### Run Redis server
 
     redis-server /usr/local/etc/redis.conf &
 
-### Install Python [bindings](https://redis-py.readthedocs.io/
+### Install Python [bindings](https://redis-py.readthedocs.io/ for Redis
 
     pip install redis
 

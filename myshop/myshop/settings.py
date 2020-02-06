@@ -64,6 +64,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # This option will cause the cart context processor to be executed every time a template
+                # is rendered.  Context processors are executed in all the requests that use  RequestContext.
+                # You might want to create a custom template tag instead of a context processor
+                # if your functionality is not needed in all templates, especially if it involves database queries.
+                'cart.context_processors.cart',
             ],
         },
     },
