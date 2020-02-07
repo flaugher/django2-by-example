@@ -14,6 +14,12 @@
   </div>
   <div id="subheader">
     <div class="cart">
+      <!--
+        'cart' comes from the cart context processor which returns the shopping cart
+        associated with the current request.  That cart is defined by the Cart class
+        in cart.py.  total_items is a template variable that is defined using the 'with'
+        construct.  'get_total_price' is a method from the Cart class.
+      -->
       {% with total_items=cart|length %}
         {% if cart|length > 0 %}
           Your cart:
