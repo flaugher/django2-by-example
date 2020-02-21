@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/Users/flaugher/.virtualenvs/django2_by_example/bin/python"
+    "python.pythonPath": "/Users/flaugher/.virtualenvs/django2_by_example/bin/python",
+    "editor.parameterHints.enabled": false
 }
