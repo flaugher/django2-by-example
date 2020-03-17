@@ -15,13 +15,17 @@ Code for this book is here:
 
 ## Start development server
 
-    cd ~/projects/django/django2_by_example
+    cd ~/projects/django/django2_by_example/<project>
     workon django2_by_example
     python manage.py runserver
 
 ## URLS
 
 [localhost:8000](http://localhost:8000)
+
+## Accounts
+
+See login_accounts file.
 
 ## Edit code
 
