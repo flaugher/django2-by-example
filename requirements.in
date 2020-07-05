@@ -1,4 +1,5 @@
 braintree
+celery
 Django
 django-extensions
 django-taggit

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+from braintree import Configuration, Environment
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,18 @@ CART_SESSION_ID = 'cart'
 
 # Display emails on the console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# Braintree payment processing sandbox account
+
+BRAINTREE_MERCHANT_ID = '7tvbkyx9qc5bchrq'
+BRAINTREE_PUBLIC_KEY = 'nrg36kxq7q8vjdtn'
+BRAINTREE_PRIVATE_KEY = '14e89d8091624fbc2b43aedb0d769f45'
+
+
+Configuration.configure(
+    Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)
