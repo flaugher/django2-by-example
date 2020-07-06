@@ -23,8 +23,11 @@ urlpatterns = [
     # Put cart path before shop path since it is more restrictive.
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
+    # payment must precede shop.urls to avoid undesired pattern match.
+    paht('payment/', include('payment.urls'), namespace='payment'),
     path('', include('shop.urls', namespace='shop')),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
