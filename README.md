@@ -23,7 +23,7 @@ Code for this book is here:
 
 [localhost:8000](http://localhost:8000)
 
-## Accounts
+## Accounts and passwords
 
 See login_accounts file.
 
