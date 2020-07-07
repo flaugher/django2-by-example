@@ -1,3 +1,5 @@
+from pdb import set_trace as debug
+
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
@@ -10,6 +12,7 @@ from .tasks import order_created
 
 def order_create(request):
     """Create a new order."""
+    # debug()
     # Get current cart from the session.
     cart = Cart(request)
     if request.method == 'POST':
@@ -38,5 +41,5 @@ def order_create(request):
     else:
         form = OrderCreateForm()
     return render(request,
-                  'orders/order/created.html',
+                  'orders/order/create.html',
                   {'cart': cart, 'form': form})

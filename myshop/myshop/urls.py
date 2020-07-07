@@ -24,7 +24,7 @@ urlpatterns = [
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
     # payment must precede shop.urls to avoid undesired pattern match.
-    paht('payment/', include('payment.urls'), namespace='payment'),
+    path('payment/', include('payment.urls', namespace='payment'),),
     path('', include('shop.urls', namespace='shop')),
 ]
 
