@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+
+from coupons.forms import CouponApplyForm
 from shop.models import Product
 
 from .cart import Cart
@@ -19,6 +21,7 @@ def cart_add(request, product_id):
                  quantity=cd['quantity'],
                  update_quantity=cd['update'])
     return redirect('cart:cart_detail')
+
 
 def cart_remove(request, product_id):
     """Remove one or more items from a cart."""
@@ -42,6 +45,7 @@ def cart_detail(request):
         # one.
         # I DON'T QUITE UNDERSTAND WHAT THIS CODE IS DOING.
         item['update_quantity_form'] = CartAddProductForm(
-                    initial={'quantity': item['quantity'],
-                    'update': True})
-    return render(request, 'cart/detail.html', {'cart': cart})
+            initial={'quantity': item['quantity'],
+                     'update': True})
+    coupon_apply_form = CouponApplyForm()
+    return render(request, 'cart/detail.html', {'cart': cart, 'coupon_apply_form': coupon_apply_form})

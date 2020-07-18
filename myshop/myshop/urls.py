@@ -23,8 +23,9 @@ urlpatterns = [
     # Put cart path before shop path since it is more restrictive.
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
-    # payment must precede shop.urls to avoid undesired pattern match.
+    # payment and coupons must precede shop.urls to avoid undesired pattern matches.
     path('payment/', include('payment.urls', namespace='payment'),),
+    path('coupones/', include('coupons.urls', namespace='coupons')),
     path('', include('shop.urls', namespace='shop')),
 ]
 
