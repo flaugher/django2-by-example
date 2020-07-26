@@ -25,7 +25,7 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='orders')),
     # payment and coupons must precede shop.urls to avoid undesired pattern matches.
     path('payment/', include('payment.urls', namespace='payment'),),
-    path('coupones/', include('coupons.urls', namespace='coupons')),
+    path('coupons/', include('coupons.urls', namespace='coupons')),
     path('', include('shop.urls', namespace='shop')),
 ]
 
