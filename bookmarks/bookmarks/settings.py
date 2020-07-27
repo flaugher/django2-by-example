@@ -156,7 +156,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': '/Users/flaugher/projects/django/django2_by_example/bookmarks/django.log',
+            'filename': '/Users/flaugher/projects/django/django2_by_example/myfiles/bookmarks/django.log',
         },
     },
     'loggers': {
