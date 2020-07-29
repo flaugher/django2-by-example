@@ -1,15 +1,18 @@
-from django.shortcuts import render, redirect
+from pdb import set_trace as debug
+
+from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_POST
-from .models import Coupon
+
 from .forms import CouponApplyForm
+from .models import Coupon
 
 
 # howto: restrict view to post/POST requests
 @require_POST
 def coupon_apply(request):
     now = timezone.now()
-    form = CouponApplyForm(require_POST)
+    form = CouponApplyForm(request.POST)
     if form.is_valid():
         code = form.cleaned_data['code']
         try:

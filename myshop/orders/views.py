@@ -26,8 +26,14 @@ def order_create(request):
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
-            # Create new order in database.
-            order = form.save()
+            # Create new order in database but don't save it at first.  Wait and apply a
+            # coupon, if there is one, and then save the order.
+            # howto: create an object without saving it
+            order = form.save(commit=False)
+            if cart.coupon:
+                order.coupon = cart.coupon
+                order.discount = cart.coupon.discount
+            order.save()
             for item in cart:
                 OrderItem.objects.create(order=order,
                                          product=item['product'],
