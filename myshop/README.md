@@ -20,6 +20,10 @@ To have it always run when you boot up, do
 
     brew services start rabbitmq
 
+## Edit translations
+
+You can also use [Poedit](https://poedit.net/) to edit your translation (.po) files.
+
 ## Braintree
 
 When testing the cart and checkout in Ch. 8, you can use this test Visa credit card:
