@@ -40,6 +40,10 @@ Login to braintree to see your test transactions:
 
 ## Problems
 
+### Couldn't find URL when checking Rosetta
+
+In the section "Translating URL patterns", you're supposed to open ```http://127.0.0.1/en/rosetta```.  But the pattern can't be found unless you first log into the admin application at ```http://127.0.0.1/admin```.  Once you do that you can enter the rosetta URL.
+
 ### Unable to load celery application ...
 
 I got this error when I tried to start Celery in the "Testing payments" chapter:

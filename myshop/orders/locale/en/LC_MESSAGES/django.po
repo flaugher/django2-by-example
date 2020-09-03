@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-03 19:52-0700\n"
+"POT-Creation-Date: 2020-09-02 16:50-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,39 +18,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:13
+#: orders/models.py:13
 msgid "first name"
 msgstr ""
 
-#: models.py:14
+#: orders/models.py:14
 msgid "last name"
 msgstr ""
 
-#: models.py:15
+#: orders/models.py:15
 msgid "email"
 msgstr ""
 
-#: models.py:16
+#: orders/models.py:16
 msgid "address"
 msgstr ""
 
-#: models.py:17
+#: orders/models.py:17
 msgid "postal code"
 msgstr ""
 
-#: models.py:18
+#: orders/models.py:18
 msgid "city"
 msgstr ""
 
-#: templates/orders/order/create.html:5 templates/orders/order/create.html:9
+#: orders/templates/orders/order/create.html:5
+#: orders/templates/orders/order/create.html:9
 msgid "Checkout"
 msgstr ""
 
-#: templates/orders/order/create.html:12
+#: orders/templates/orders/order/create.html:12
 msgid "Your order"
 msgstr ""
 
-#: templates/orders/order/create.html:22
+#: orders/templates/orders/order/create.html:22
 #, python-format
 msgid ""
 "\n"
@@ -58,23 +59,28 @@ msgid ""
 "          "
 msgstr ""
 
-#: templates/orders/order/create.html:29
+#: orders/templates/orders/order/create.html:29
 msgid "Total"
 msgstr ""
 
-#: templates/orders/order/create.html:34
+#: orders/templates/orders/order/create.html:34
 msgid "Place order"
 msgstr ""
 
-#: templates/orders/order/created.html:5 templates/orders/order/created.html:9
+#: orders/templates/orders/order/created.html:5
+#: orders/templates/orders/order/created.html:9
 msgid "Thank you"
 msgstr ""
 
-#: templates/orders/order/created.html:10
+#: orders/templates/orders/order/created.html:10
 #, python-format
 msgid ""
 "\n"
 "    <p>Your order has been successfully completed. Your order number is "
 "<strong>%(order_id)s</strong>.</p>\n"
 "  "
+msgstr ""
+
+#: orders/urls.py:9
+msgid "create/"
 msgstr ""

@@ -2,6 +2,7 @@ braintree
 celery
 Django
 django-extensions
+django-rosetta
 django-taggit
 django-template-check
 isort
